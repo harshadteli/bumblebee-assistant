@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="🤖👨‍💻📲 Your assistant built using HTML, JavaScript, and localStorage. Supports voice commands, animated typing, audio responses, chat history, export, and more!">
+  <meta name="keywords" content="AI ">
+  <meta name="subject" content="Virtual Assistant">
+  <meta name="copyright" content="HarshTech Organization">
+  <meta name="language" content="English">
+  <meta name="robots" content="index,follow">
+  <meta name="revised" content="saturday,may 6th,2025,8:45 pm">
+  <meta name="abstract" content="HarshTech  specializes in custom Software Development and Web design solutions and AI Tools.">
+  <meta name="topic" content="Software Development">
+  <meta name="summary" content="HarshTech Provides innovative technology solutions for business">
+  <meta name="classification" content="business">
+  <meta name="author" content="Harshad Teli">
+  <meta name="author" content="harshadteli697@gmail.com">
+  <meta name="designer" content="Harshad Teli">
+  <meta name="reply-to" content="harshtech417@gmail.com">
+  <meta name="owner" content="Harshad Teli">
+  <meta name="directory" content="Technology">
+  <meta name="pagename" content="HarshTech Organization feedback form">
+  <meta name="category" content="Web Development">
+  <meta name="coverage" content="Worldwide">
+  <meta name="distribution" content="Global">
+  <title>Bumblebee Transformer Assistent</title>
+  <link rel="stylesheet" href="./assets/CSS/style.css" />
+  <link rel="shortcut icon" href="./assets/IMAGES/bumble.jpg" type="image/x-icon">
+  <style>
+    .main-content {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h1 {
+      color: #222;
+    }
+
+    p {
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="statusPopup" class="typing-effect"></div>
+  <div class="header">
+    <h1>🤖 Bumblebee Chatbot Assistant</h1>
+  </div>
+
+  <div class="assistant-section">
+    <img src="./assets/IMAGES/bumble.jpg" alt="Bumblebee Chatbot">
+    <h2>Bumblebee: Your Cybertron Guide</h2>
+    <div class="typing-effect">“I may not talk much... but I get things done!”</div>
+
+    <div class="info">
+      <p><strong>Origin:</strong> Cybertron</p>
+      <p><strong>Specialty:</strong> Intelligence Gathering, Infiltration</p>
+      <p><strong>Language:</strong> Radio & Audio Clips Communication</p>
+      <p><strong>Purpose:</strong> Assist humans with powerful AI guidance, system info, and mission control.</p>
+      <p><strong>Features:</strong> Voice Commands, Mission Navigation, Real-time Search, PDF Report Assist</p>
+    </div>
+  </div>
+
+  <button class="enter-btn" onclick="goToAlienChatbot()">🚀 Enter Bumblebee Chatbot</button>
+  <script src="./assets/JS/script.js"></script>
+
+  <script>
+
+    // Inject styles ONLY for the popup
+    const popupStyle = document.createElement("style");
+    popupStyle.textContent = `
+    #statusPopup {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #000;
+      border: 2px solid #00ff00;
+      color: #00ff00;
+      padding: 12px 18px;
+      z-index: 9999;
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      width: auto;
+      max-width: 90%;
+      display: none;
+      box-shadow: 0 0 10px #00ff00;
+      white-space: nowrap;
+    }
+
+    #statusPopup.offline {
+      border-color: red;
+      color: red;
+      box-shadow: 0 0 10px red;
+    }
+
+    .typing-effect::after {
+      content: '|';
+      animation: blink 0.8s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+  `;
+    document.head.appendChild(popupStyle);
+
+    // Reference to the popup
+    const statusPopup = document.getElementById('statusPopup');
+
+    // Function to display popup with typing effect
+    function showTypingPopup(message, isOffline = false, redirectAfter = false) {
+      statusPopup.classList.remove('offline');
+      if (isOffline) statusPopup.classList.add('offline');
+
+      statusPopup.style.display = 'block';
+      statusPopup.innerHTML = '';
+      let i = 0;
+
+      const typeInterval = setInterval(() => {
+        if (i < message.length) {
+          statusPopup.innerHTML += message.charAt(i);
+          i++;
+        } else {
+          clearInterval(typeInterval);
+
+          setTimeout(() => {
+            statusPopup.style.display = 'none';
+
+            if (redirectAfter && isOffline) {
+              showTypingPopup("Redirecting to safe mode...", true);
+              setTimeout(() => {
+                alert("You are offline. Please check your connection.");
+                // location.href = 'offline.html'; // Optional: real redirect
+              }, 2000);
+            }
+          }, 2000); // Hide popup after 2 seconds
+        }
+      }, 80);
+    }
+
+    // Check status on load
+    function handleOnlineStatus() {
+      if (navigator.onLine) {
+        showTypingPopup(">> SYSTEM IS ONLINE <<");
+      } else {
+        showTypingPopup(">> SYSTEM IS OFFLINE <<", true, true);
+      }
+    }
+
+    // Event listeners
+    window.addEventListener('load', handleOnlineStatus);
+    window.addEventListener('online', () => showTypingPopup(">> SYSTEM IS BACK ONLINE <<"));
+    window.addEventListener('offline', () => showTypingPopup(">> SYSTEM IS OFFLINE <<", true, true));
+
+
+  </script>
+
+</body>
+
+</html>

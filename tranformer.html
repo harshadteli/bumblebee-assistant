@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bumble Bee Assistant</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="./assets/CSS/transformer.css">
+  <link rel="shortcut icon" href="./assets/IMAGES/bumble.jpg" type="image/x-icon">
+  <style>
+        .main-content {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h1 {
+      color: #222;
+    }
+
+    p {
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+   <div id="statusPopup" class="typing-effect"></div>
+
+  <div class="theme-toggle" onclick="toggleTheme()">🌞</div>
+
+  <!-- Name Popup -->
+  <div class="name-popup" id="namePopup">
+    <div class="name-form">
+      <h3>Welcome to Bumble Bee Assistant 🤖</h3>
+      <p>Please enter your name:</p>
+      <input type="text" id="usernameInput" placeholder="Your name">
+      <button onclick="startAssistant()">Start</button>
+    </div>
+  </div>
+
+  <!-- Assistant Container -->
+  <div class="container" id="assistantContainer">
+    <div class="header">
+      <div class="avatar"></div>
+      <h2>👋 Bumble Bee Assistant</h2>
+      <p>Hello, <span id="displayName"></span>! Ask me anything.</p>
+    </div>
+
+    <div class="chatbox" id="chatbox">
+      <img src="https://i.postimg.cc/SsV4Bphh/spinner-bee.gif" class="spinner" id="spinner" alt="Loading...">
+    </div>
+
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Type a command...">
+      <button onclick="sendMessage()">Send</button>
+      <button onclick="startListening()">🎤</button>
+    </div>
+
+    <div class="commands">
+      <button onclick="quickCommand('What is the time?')">Time</button>
+      <button onclick="quickCommand('Tell me a joke')">Joke</button>
+      <button onclick="quickCommand('Open Google')">Google</button>
+      <button onclick="quickCommand('What is your name?')">Your Name</button>
+      <button class="export-btn" onclick="exportChatPDF()">📄 Export Chat</button>
+      <button class="clear-btn" onclick="clearChat()">🧹 Clear Chat</button>
+      <button class="reset-btn" onclick="resetAssistant()">🔁 Reset</button>
+    </div>
+  </div>
+
+  <div class="popup-msg" id="popupMsg">PDF Downloaded</div>
+   <center><font color="indianred"><small>&copy; 2025 HarshTech Organization | All rights reserved</small></font></center>
+   <br><br><br>
+
+<script src="./assets/JS/transformer.js"></script>
+<script>
+  // Inject styles ONLY for the popup
+  const popupStyle = document.createElement("style");
+  popupStyle.textContent = `
+    #statusPopup {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #000;
+      border: 2px solid #00ff00;
+      color: #00ff00;
+      padding: 12px 18px;
+      z-index: 9999;
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      width: auto;
+      max-width: 90%;
+      display: none;
+      box-shadow: 0 0 10px #00ff00;
+      white-space: nowrap;
+    }
+
+    #statusPopup.offline {
+      border-color: red;
+      color: red;
+      box-shadow: 0 0 10px red;
+    }
+
+    .typing-effect::after {
+      content: '|';
+      animation: blink 0.8s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+  `;
+  document.head.appendChild(popupStyle);
+
+  // Reference to the popup
+  const statusPopup = document.getElementById('statusPopup');
+
+  // Function to display popup with typing effect
+  function showTypingPopup(message, isOffline = false, redirectAfter = false) {
+    statusPopup.classList.remove('offline');
+    if (isOffline) statusPopup.classList.add('offline');
+
+    statusPopup.style.display = 'block';
+    statusPopup.innerHTML = '';
+    let i = 0;
+
+    const typeInterval = setInterval(() => {
+      if (i < message.length) {
+        statusPopup.innerHTML += message.charAt(i);
+        i++;
+      } else {
+        clearInterval(typeInterval);
+
+        setTimeout(() => {
+          statusPopup.style.display = 'none';
+
+          if (redirectAfter && isOffline) {
+            showTypingPopup("Redirecting to safe mode...", true);
+            setTimeout(() => {
+              alert("You are offline. Please check your connection.");
+              // location.href = 'offline.html'; // Optional: real redirect
+            }, 2000);
+          }
+        }, 2000); // Hide popup after 2 seconds
+      }
+    }, 80);
+  }
+
+  // Check status on load
+  function handleOnlineStatus() {
+    if (navigator.onLine) {
+      showTypingPopup(">> SYSTEM IS ONLINE <<");
+    } else {
+      showTypingPopup(">> SYSTEM IS OFFLINE <<", true, true);
+    }
+  }
+
+  // Event listeners
+  window.addEventListener('load', handleOnlineStatus);
+  window.addEventListener('online', () => showTypingPopup(">> SYSTEM IS BACK ONLINE <<"));
+  window.addEventListener('offline', () => showTypingPopup(">> SYSTEM IS OFFLINE <<", true, true));
+
+</script>
+</body>
+</html>
