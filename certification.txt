@@ -1,0 +1,24 @@
+---------------------------------------------------
+Here are the ownership and the certification details
+of the Web Calculator v1.0.0
+---------------------------------------------------
+
+app_name - 						Bumblebee Assistent (Transformer)
+app_alias - 					Bumblebee Assistent (Transformer)
+app_author_name - 				Harshad Teli
+app_author_organizational - 	            HarshTech Organization
+app_author_organization - 		      HarshTech Organization
+app_author_locality - 			      HarshTech Organization
+app_author_state - 				Maharashtra
+app_author_country - 			      India
+app_password - 					9Qc9AtNrmBgZ
+app_versionName - 				versionName "1.0"
+app_versionCode - 				100
+
+---------------------------------------------------
+The certification was created by WebIntoApp.com at
+the Sunday 22nd of June 2025 04:24:17 AM
+
+https://github.com/harshadteli
+---------------------------------------------------
+
